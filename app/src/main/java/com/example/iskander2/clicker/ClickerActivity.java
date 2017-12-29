@@ -2,16 +2,19 @@ package com.example.iskander2.clicker;
 
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class ClickerActivity extends AppCompatActivity {
 
@@ -21,78 +24,61 @@ public class ClickerActivity extends AppCompatActivity {
     public final String TAG = "MyTest";
 
     int clicks =0;
+    public ProgressBar progressBar;
+    public SharedPreferences mClicks;
+    public TextView textView;
+    public volatile ImageView coinView;
 
-    SharedPreferences mClicks;
-    TextView textView;
-    ImageView imageView;
-
-    volatile boolean isWin;
-    volatile boolean pressed;
+    public volatile boolean isWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clicker);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         textView = (TextView) findViewById(R.id.score);
-        imageView = (ImageView) findViewById(R.id.imageView);
-        imageView.setX((float) Math.random() * 1000);
-        imageView.setY((float) Math.random() * 1000);
-        Log.d(TAG, "Vse ok");
-        pressed = false;
-        isWin = false;
+        coinView = (ImageView) findViewById(R.id.imageView);
+        
+        coinView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                        clicks = Integer.parseInt(textView.getText().toString());
+                        textView.setText(Integer.toString(++clicks));
+                        coinView.setVisibility(View.INVISIBLE);
+                        coinView.setX((float) Math.random() * 1000);
+                        coinView.setY((float) Math.random() * 1000);
+                        Log.d(TAG, "Current cointView X " + coinView.getX());
+                        Log.d(TAG, "Current cointView Y " + coinView.getY());
+                        new Handler().postDelayed(new Runnable() {
+                         @Override
+                         public void run() {
+                            coinView.setVisibility(View.VISIBLE);
+                         }
+                               }, 1000);
+                if (clicks == 20) {
+                    isWin = true;
+                }
+                    }
+        });
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            clicks = Integer.parseInt(textView.getText().toString());
-                            textView.setText(Integer.toString(++clicks));
-                            imageView.setVisibility(View.INVISIBLE);
-                            imageView.setX((float) Math.random() * 100);
-                            imageView.setY((float) Math.random() * 100);
-                            Toast.makeText(ClickerActivity.this, "coin is invisible", Toast.LENGTH_LONG).show();
-                            try{
-                            Thread.sleep(2000);
-                            imageView.setVisibility(View.VISIBLE);
-                                }
-                            catch (Exception e){}
-                            if (clicks == 20) {
-                                isWin = true;
-                            }
-                        }
-                    });
-            }
-            }
-        }).start();
-       /* imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clicks = Integer.parseInt(textView.getText().toString());
-                textView.setText(Integer.toString(++clicks));
-                pressed = true;
-                imageView.setVisibility(View.INVISIBLE);
-                if(clicks==20){
-                    isWin = true;
+                int progress = 0;
+                while (!isWin) {
+                    try{
+                    Thread.sleep(1000);
+                    progressBar.setProgress(progress++);}
+                    catch (Exception e){}
                 }
             }
-        }); */
-       /*if (pressed) {
-                        try {
-                            Thread.sleep(2000);
-                            imageView.setVisibility(View.VISIBLE);
-                            imageView.setX((float) Math.random() * 1000);
-                            imageView.setY((float) Math.random() * 1000);
-                            pressed = false;
-                        } catch (Exception e) {
-                        }
-                    }*/
+        }).start();
+
         MediaPlayer backgroundMusic = MediaPlayer.create(this,R.raw.background);
         backgroundMusic.start();
     }
 
-/*    @Override
+  /*  @Override
     protected void onPause() {
         super.onPause();
         SharedPreferences.Editor editor = mClicks.edit();
@@ -107,6 +93,7 @@ public class ClickerActivity extends AppCompatActivity {
             textView.setText(Integer.toString(mClicks.getInt(APP_PREFERENCES_CLICKS, 0)));
             clicks = mClicks.getInt(APP_PREFERENCES_CLICKS, 0);
         }
-    } */
-
+    }
+            */
 }
+

@@ -16,7 +16,7 @@ ImageButton button1;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startNewActivity();
-        TextView textView1 = (TextView) findViewById(R.id.text_view);
+        TextView textView1 = (TextView) findViewById(R.id.title);
         TranslateAnimation animation = new TranslateAnimation(-1500.0f, 0.0f, 0.0f, 0.0f);
         animation.setDuration(800);
         animation.setFillAfter(true);

@@ -23,7 +23,7 @@
         android:layout_height="30dp"
         android:layout_gravity="top|start"
         android:indeterminate="false"
-        android:max="100" />
+        android:max="30" />
 
     <TextView
         android:id="@+id/score"

@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class ClickerActivity extends AppCompatActivity {
 
-    public static int clicks =0;
+    protected static int clicks =0;
     int i=1;
     static final String APP_PREFERENCES_CLICKS = "Clicks";
     static final String APP_PREFERENCES = "Settings";
@@ -49,17 +49,9 @@ public class ClickerActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         score = (TextView) findViewById(R.id.score);
 
-
-        final LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_window, null);
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true;
-        popupWindow = new PopupWindow(popupView,width,height,focusable);
-
         //Spawning the Coin
 
-        final Thread spawnThread = new Thread(new Runnable() {
+         Thread spawnThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 coinView = (ImageView) findViewById(R.id.imageView);
@@ -130,12 +122,12 @@ public class ClickerActivity extends AppCompatActivity {
         int X = r.nextInt(displayMetrics.widthPixels);
         int Y = r.nextInt(displayMetrics.heightPixels);
                 if(X>100){
-                    coinView.setX(X-100);
+                    coinView.setX(X-80);
                     coinView.setY(Y);
                 }
                 if(Y>100){
                     coinView.setX(X);
-                    coinView.setY(Y-100);
+                    coinView.setY(Y-80);
                 }
         if (X<100 && Y<100){
             coinView.setX(X);
@@ -158,7 +150,6 @@ public class ClickerActivity extends AppCompatActivity {
         super.onPause();
         backgroundMusic.stop();
 
-
         SharedPreferences.Editor editor = mClicks.edit();
         editor.putInt(APP_PREFERENCES_CLICKS,clicks);
         editor.apply();
@@ -170,10 +161,6 @@ public class ClickerActivity extends AppCompatActivity {
 
         backgroundMusic.start();
         final LinearLayout mainLayout = (LinearLayout) findViewById(R.id.linearLayout);
-           //     if(i!=1) {
-          //                  popupWindow.showAtLocation(mainLayout,Gravity.CENTER, 0, 0);
-          //                  isPaused = false;
-          //     }
             if (mClicks.contains(APP_PREFERENCES_CLICKS)) {
                 score.setText(Integer.toString(mClicks.getInt(APP_PREFERENCES_CLICKS, clicks)));
                 clicks = mClicks.getInt(APP_PREFERENCES_CLICKS, 0);

@@ -5,8 +5,8 @@
     <string name="contentDescripton"> </string>
     <string name="description"></string>
     <string name="score">0</string>
-    <string name="lose">Oh no! You Lost!</string>
     <string name="restart_button">Yes</string>
     <string name="restart_textView">Do you want to restart?</string>
     <string name="result">Congratulation! You won!</string>
+    <string name="lose">Oh no! You lost!</string>
 </resources>

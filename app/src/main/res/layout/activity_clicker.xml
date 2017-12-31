@@ -34,11 +34,11 @@
         android:textAlignment="textEnd"
         android:textSize="50sp" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:contentDescription="@string/contentDescripton"
-            app:srcCompat="@drawable/monetka" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="51dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/contentDescripton"
+        app:srcCompat="@drawable/monetka1" />
 
 </LinearLayout>

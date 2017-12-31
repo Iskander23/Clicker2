@@ -20,7 +20,10 @@
         <activity
             android:name=".ClickerActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".PopActivity"></activity>
+        <activity android:name=".PopActivity"
+            android:theme="@style/AppTheme.CustomTheme"
+            >
+        </activity>
     </application>
 
 </manifest>
